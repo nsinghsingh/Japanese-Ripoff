@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public PlayerData playerData;
+    private PlayerData playerData;
     private List<Card> cards = new List<Card>();
     public GameObject cardGrid;
     public List<GameObject> cardsDisplayed = new List<GameObject>();
@@ -18,6 +18,7 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerData = PlayerData.playerData;
         cards = playerData.cards;
         enterInventory();
     }

@@ -7,14 +7,13 @@ public class Stats: MonoBehaviour
 {
     public Text levelText;
     public Text moneyText;
-    public Text micromoneyText;
     public Image Expmask;
     public Image Staminamask;
-    public PlayerData playerData;
+    private PlayerData playerData;
 
     void Start()
     {
-        
+        playerData = PlayerData.playerData;
     }
 
     // Update is called once per frame
@@ -22,7 +21,6 @@ public class Stats: MonoBehaviour
     {
         levelText.text = playerData.level.ToString();
         moneyText.text = playerData.money.ToString();
-        micromoneyText.text = playerData.micromoney.ToString();
         getCurrentFill();
         if (Input.GetKeyDown(KeyCode.Space))
         {

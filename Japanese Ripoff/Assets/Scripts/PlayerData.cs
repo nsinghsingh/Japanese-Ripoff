@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
+using System;
 using System.IO;
+using UnityEngine.UI;
 
 public class PlayerData : MonoBehaviour
 {
@@ -14,9 +16,7 @@ public class PlayerData : MonoBehaviour
     public int maxExp;
     public int currentStamina;
     public int maxStamina;
-    public List<Card> cards = new List<Card>();
-    public List<Card> enemies = new List<Card>();
-    public List<Card> allies = new List<Card>();
+    public List<GameObject> cards = new List<GameObject>();
 
     public static PlayerData playerData { get; private set; }
 
@@ -37,6 +37,7 @@ public class PlayerData : MonoBehaviour
     private void makeSQLConnection()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
+        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         readData(dbcon);
     }
@@ -46,17 +47,53 @@ public class PlayerData : MonoBehaviour
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
         IDataReader reader;
-        commandRead.CommandText = "SELECT * FROM NumberOfCardsPerUser LEFT JOIN Card ON id = fkCardId WHERE fkUser = '" + user + "'";
+        string query = "SELECT * FROM NumberOfCardsPerUser LEFT JOIN Card ON id = fkCardId WHERE fkUser = '" + user + "'";
+        commandRead.CommandText = query;
         reader = commandRead.ExecuteReader();
         while (reader.Read())
         {
-            Debug.Log("name: " + reader[0].ToString());
-            Debug.Log("name: " + reader[1].ToString());
-            Debug.Log("name: " + reader[2].ToString());
-            Debug.Log("name: " + reader[3].ToString());
-            Debug.Log("name: " + reader[4].ToString());
-            Debug.Log("name: " + reader[5].ToString());
+            GameObject card = new GameObject();
+            card.AddComponent<Card>();
+            Card cardInfo = card.GetComponent<Card>();
+            cardInfo.id = int.Parse(reader[3].ToString());
+            cardInfo.cardName = reader[4].ToString();
+            card.name = reader[4].ToString();
+            cardInfo.health = int.Parse(reader[5].ToString());
+            cardInfo.attack = int.Parse(reader[6].ToString());
+            cardInfo.defense = int.Parse(reader[7].ToString());
+            cardInfo.rarity = reader[8].ToString();
+            cardInfo.passivesText = new string[] { reader[9].ToString(), reader[10].ToString(), reader[11].ToString() };
+            card.AddComponent(Type.GetType(reader[12].ToString()));
+            cardInfo.Passives = card.GetComponent<Passive>();
+            cardInfo.profile = Resources.Load<Sprite>("Cards/" + reader[13].ToString());
+            if (cardInfo.rarity.Equals("ssr"))
+            {
+                cardInfo.rarityIcon = Resources.Load<Sprite>("Icons/SuperSuperRareRarity");
+            }
+            else if (cardInfo.rarity.Equals("sr"))
+            {
+                cardInfo.rarityIcon = Resources.Load<Sprite>("Icons/SuperRareRarity");
+            }
+            else if (cardInfo.rarity.Equals("r"))
+            {
+                cardInfo.rarityIcon = Resources.Load<Sprite>("Icons/RareRarity");
+            }
+            else
+            {
+                cardInfo.rarityIcon = Resources.Load<Sprite>("Icons/NormalRarity");
+            }
+            cards.Add(card);
         }
+        /*query = "SELECT * FROM User WHERE name = '" + user + "'";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+        while (reader.Read())
+        {
+            level = int.Parse(reader[2].ToString());
+            money = int.Parse(reader[3].ToString());
+            currentExp = int.Parse(reader[4].ToString());
+            currentStamina = int.Parse(reader[5].ToString());
+        }*/
         dbcon.Close();
     }
 }

@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    public Image profile;
+    public Sprite profile;
     public int attack;
     public int defense;
     public int health;
     public int id;
+    public string cardName;
     public string[] passivesText;
     public string rarity;
-    public Image rarityIcon;
+    public Sprite rarityIcon;
     public Passive Passives;
 
     public void attackPassive()

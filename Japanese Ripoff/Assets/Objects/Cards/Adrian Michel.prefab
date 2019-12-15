@@ -186,6 +186,11 @@ PrefabInstance:
       propertyPath: profile
       value: 
       objectReference: {fileID: 3326307728963406536}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: cardName
+      value: Adrian Michel
+      objectReference: {fileID: 0}
     - target: {fileID: 3826434654959815282, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_Name

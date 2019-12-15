@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadStage : MonoBehaviour
 {
-    public int levelIndex;
+    public int sceneIndex;
     private PlayerData playerData;
     public int neededStamina;
     public string stageName;
@@ -27,7 +25,7 @@ public class LoadStage : MonoBehaviour
         else
         {
             DontDestroyOnLoad(playerData);
-            SceneManager.LoadScene(levelIndex);
+            SceneManager.LoadScene(sceneIndex);
         }
     }
 }

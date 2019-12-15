@@ -32,15 +32,19 @@ public class Inventory : MonoBehaviour
             card.AddComponent<Button>();
             card.AddComponent<Image>();
             card.transform.SetParent(cardGrid.transform);
-            Card cardInfo = card.GetComponent<Card>();
-            cardInfo = cards[i];
+            Card cardInfo = cards[i];
             Image profile = card.GetComponent<Image>();
             profile.sprite = cardInfo.profile.sprite;
             Button button = card.GetComponent<Button>();
             button.onClick.AddListener(delegate () { seeCardInfo(cardInfo); });
-            //TO DO Set color of button
+            ColorBlock colorBlock = button.colors;
+            colorBlock.highlightedColor = new Color(168, 168, 168);
+            colorBlock.selectedColor = new Color(168, 168, 168);
+            colorBlock.pressedColor = new Color(168, 168, 168);
+            button.colors = colorBlock;
             card.name = cardInfo.name;
             cardsDisplayed.Add(card);
+            card.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
         }
     }
 

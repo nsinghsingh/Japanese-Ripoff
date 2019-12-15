@@ -19,66 +19,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3826434654959815282, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+    - target: {fileID: 1544212385602924351, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
-      propertyPath: m_Name
-      value: Adrian Michel
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: passivesText.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: attack
-      value: 911
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: defense
-      value: 911
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: health
-      value: 911
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: id
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: rarity
-      value: sr
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: passivesText.Array.data[0]
-      value: Something
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: passivesText.Array.data[2]
-      value: Something
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: passivesText.Array.data[1]
-      value: Something
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
-        type: 3}
-      propertyPath: Passives
+      propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -2698908593538032572}
-    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+      objectReference: {fileID: 21300000, guid: 23971cbca1ffbce4381f459c4d4873ae,
         type: 3}
-      propertyPath: profile
-      value: 
-      objectReference: {fileID: 3326307728963406536}
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -137,12 +83,12 @@ PrefabInstance:
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
@@ -177,19 +123,74 @@ PrefabInstance:
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2262450826415165816, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1544212385602924351, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
-      propertyPath: m_Sprite
+      propertyPath: passivesText.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: attack
+      value: 911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: defense
+      value: 911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: health
+      value: 911
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: rarity
+      value: sr
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: passivesText.Array.data[0]
+      value: Something
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: passivesText.Array.data[2]
+      value: Something
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: passivesText.Array.data[1]
+      value: Something
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: Passives
       value: 
-      objectReference: {fileID: 21300000, guid: 23971cbca1ffbce4381f459c4d4873ae,
+      objectReference: {fileID: 4250347214145942531, guid: 05b012cb373fbd940a4499c6709c7d6e,
         type: 3}
+    - target: {fileID: 3809049598995166942, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: profile
+      value: 
+      objectReference: {fileID: 3326307728963406536}
+    - target: {fileID: 3826434654959815282, guid: 6a3cbf67ce581df4097a6055ca29cf94,
+        type: 3}
+      propertyPath: m_Name
+      value: Adrian Michel
+      objectReference: {fileID: 0}
     - target: {fileID: 9109024378637546510, guid: 6a3cbf67ce581df4097a6055ca29cf94,
         type: 3}
       propertyPath: m_Sprite
@@ -213,6 +214,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035112895488274309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

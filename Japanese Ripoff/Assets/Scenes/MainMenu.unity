@@ -3276,13 +3276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b694170fded7144b12ff5f3ce87210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: admin
-  level: 1
+  user: 
+  level: 0
   money: 0
   currentExp: 0
-  maxExp: 100
+  maxExp: 0
   currentStamina: 0
-  maxStamina: 100
+  maxStamina: 0
   cards: []
 --- !u!4 &1589778085
 Transform:

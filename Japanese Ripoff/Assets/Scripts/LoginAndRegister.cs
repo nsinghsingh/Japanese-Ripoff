@@ -17,34 +17,58 @@ public class LoginAndRegister : MonoBehaviour
     public Text submitButton;
     public Text title;
     public Button Link;
+    public Image ErrorField;
 
     // Start is called before the first frame update
     void Start()
     {
-        setLogin("");
+        setLogin("", 0);
     }
 
-    public void setLogin(string message)
+    public void setLogin(string message, int status)
     {
         isLogingIn = true;
         title.text = "Login";
         error.text = message;
+        if (status == 0) {
+            ErrorField.color = new Color(0, 0, 0, 0);
+        }
+        else if (status == 1)
+        {
+            ErrorField.color = new Color(255, 0, 0, 255);
+        }
+        else if (status == 2)
+        {
+            ErrorField.color = new Color(0, 255, 0, 255);
+        }
         submitButton.text = "Login";
         password.text = "";
         Link.onClick.RemoveAllListeners();
-        Link.onClick.AddListener(delegate () { setRegister(""); });
+        Link.onClick.AddListener(delegate () { setRegister("", 0); });
         Link.GetComponent<Text>().text = "Still don't have an account?";
         
     }
 
-    public void setRegister(string message)
+    public void setRegister(string message, int status)
     {
         isLogingIn = false;
         title.text = "Register";
         error.text = message;
+        if (status == 0)
+        {
+            ErrorField.color = new Color(0, 0, 0, 0);
+        }
+        else if (status == 1)
+        {
+            ErrorField.color = new Color(255, 0, 0, 255);
+        }
+        else if (status == 2)
+        {
+            ErrorField.color = new Color(0, 255, 0, 255);
+        }
         submitButton.text = "Register";
         Link.onClick.RemoveAllListeners();
-        Link.onClick.AddListener(delegate () { setLogin(""); });
+        Link.onClick.AddListener(delegate () { setLogin("", 0); });
         Link.GetComponent<Text>().text = "Go back";
     }
 
@@ -83,11 +107,11 @@ public class LoginAndRegister : MonoBehaviour
             query = "INSERT INTO User (name, password) VALUES('" + username.text + "', '" + password.text + "')";
             commandRead.CommandText = query;
             reader = commandRead.ExecuteReader();
-            setLogin("You succesfully created an account");
+            setLogin("You succesfully created an account", 2);
         }
         else
         {
-            setRegister("That user already exists!");
+            setRegister("That user already exists!", 1);
         }
         dbcon.Close();   
     }
@@ -118,7 +142,7 @@ public class LoginAndRegister : MonoBehaviour
         }
         else
         {
-            setLogin("Your password or username is wrong");
+            setLogin("Your password or username is wrong", 1);
         }
     }
 }

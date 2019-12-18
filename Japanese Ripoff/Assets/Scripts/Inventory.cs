@@ -32,7 +32,8 @@ public class Inventory : MonoBehaviour
             card.AddComponent<Button>();
             card.AddComponent<Image>();
             card.transform.SetParent(cardGrid.transform);
-            Card cardInfo = cards[i].GetComponent<Card>();
+            PlayerData.copyCardInfo(card, cards[i]);
+            Card cardInfo = card.GetComponent<Card>();
             Image profile = card.GetComponent<Image>();
             profile.sprite = cardInfo.profile;
             Button button = card.GetComponent<Button>();

@@ -24,16 +24,16 @@ public class Stats: MonoBehaviour
         getCurrentFill();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerData.level -= 1;
+            playerData.level += 1;
             playerData.currentExp += 1;
             playerData.currentStamina += 1;
         }
     }
     void getCurrentFill()
     {
-        float fillAmount = playerData.currentExp / playerData.maxExp;
+        float fillAmount = (float)playerData.currentExp / (float)playerData.maxExp;
         Expmask.fillAmount = fillAmount;
-        fillAmount = playerData.currentStamina / playerData.maxStamina;
+        fillAmount = (float)playerData.currentStamina / (float)playerData.maxStamina;
         Staminamask.fillAmount = fillAmount;
     }
 }

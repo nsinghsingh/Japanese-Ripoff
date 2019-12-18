@@ -16,6 +16,7 @@ public class PlayerData : MonoBehaviour
     public int maxExp;
     public int currentStamina;
     public int maxStamina;
+    public int importCode;
     public List<GameObject> cards = new List<GameObject>();
 
     public static PlayerData playerData { get; private set; }
@@ -105,8 +106,25 @@ public class PlayerData : MonoBehaviour
             currentStamina = int.Parse(reader[3].ToString());
             currentExp = int.Parse(reader[4].ToString());
             money = int.Parse(reader[5].ToString());
-            maxExp = 20 + level*3;
+            importCode = int.Parse(reader[6].ToString());
+            maxExp = 20 + level * 3;
             maxStamina = 20 + level;
         }
+    }
+
+    public static void copyCardInfo(GameObject newCard, GameObject oldCard)
+    {
+        Card newInfo = newCard.GetComponent<Card>();
+        Card oldInfo = oldCard.GetComponent<Card>();
+        newInfo.profile = oldInfo.profile;
+        newInfo.attack = oldInfo.attack;
+        newInfo.defense = oldInfo.defense;
+        newInfo.health = oldInfo.health;
+        newInfo.id = oldInfo.id;
+        newInfo.cardName = oldInfo.cardName;
+        newInfo.passivesText = oldInfo.passivesText;
+        newInfo.rarity = oldInfo.rarity;
+        newInfo.rarityIcon = oldInfo.rarityIcon;
+        newInfo.Passives = oldInfo.Passives;
     }
 }

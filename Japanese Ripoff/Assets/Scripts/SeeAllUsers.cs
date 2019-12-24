@@ -14,11 +14,11 @@ public class SeeAllUsers : MonoBehaviour
     public GameObject grid;
     public GameObject changeUser;
     public GameObject deleteUser;
+    public GameObject amount;
 
     public void loadUsers()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
@@ -38,6 +38,7 @@ public class SeeAllUsers : MonoBehaviour
             infoRow.transform.SetParent(grid.transform);
             infoRow.transform.localScale = new Vector3(1, 1, 1);
         }
+        amount.GetComponent<Text>().text = counter + " users";
         counter = 0;
         dbcon.Close();
     }

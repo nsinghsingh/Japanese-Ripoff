@@ -33,14 +33,14 @@ public class AddUser : MonoBehaviour
     public void appear()
     {
         popup.transform.localPosition = new Vector3(0, 0, 0);
-        nameField.onValueChanged.AddListener(delegate { requireName(); });
-        passwordField.onValueChanged.AddListener(delegate { requirePassword(); });
         nameField.text = "";
         passwordField.text = "";
         levelField.text = "";
         staminaField.text = "";
         moneyField.text = "";
         codeField.text = "";
+        nameField.onValueChanged.AddListener(delegate { requireName(); });
+        passwordField.onValueChanged.AddListener(delegate { requirePassword(); });
         add.interactable = false;
     }
 
@@ -90,7 +90,6 @@ public class AddUser : MonoBehaviour
     private void addUser()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
@@ -99,6 +98,7 @@ public class AddUser : MonoBehaviour
         commandRead.CommandText = query;
         reader = commandRead.ExecuteReader();
         dbcon.Close();
+        close();
     }
 
     private void getValues()
@@ -114,7 +114,7 @@ public class AddUser : MonoBehaviour
         stamina = int.Parse(staminaField.text);
         staminaQuery = new string[] { ", stamina ", ", '" + stamina + "'" };
         }
-        else { levelQuery = new string[] { "", "" }; }
+        else { staminaQuery = new string[] { "", "" }; }
         if (moneyField.text.Length > 0){
             money = int.Parse(moneyField.text);
             moneyQuery = new string[] { ", money ", ", '" + money + "'" };
@@ -124,14 +124,16 @@ public class AddUser : MonoBehaviour
             importCode = int.Parse(codeField.text);
             codeQuery = new string[] { ", importCode ", ", '" + importCode + "'" };
         }
-        else { codeQuery = new string[] { "", "" }; }
+        else {
+            importCode = 0;
+            codeQuery = new string[] { "", "" };
+        }
     }
 
     public void checkValues()
     {
         getValues();
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
@@ -150,7 +152,7 @@ public class AddUser : MonoBehaviour
             reader = commandRead.ExecuteReader();
             bool codeExists = false;
             while (reader.Read()) { codeExists = true; }
-            if (!codeExists) { addUser(); }
+            if (!codeExists || importCode == 0) { addUser(); }
             else {
                 
                 codeField.GetComponent<Image>().color = new Color(255, 0, 0);

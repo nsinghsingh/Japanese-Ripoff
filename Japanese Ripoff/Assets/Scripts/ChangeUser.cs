@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class ChangeUser : MonoBehaviour
 {
-    private PlayerData playerData;
     private string username;
     private int level;
     private int stamina;
@@ -18,28 +17,22 @@ public class ChangeUser : MonoBehaviour
     private int importCode;
     private string oldName;
     public GameObject popup;
-    public InputField namefield;
-    public InputField levelfield;
-    public InputField staminafield;
-    public InputField expfield;
-    public InputField moneyfield;
-    public InputField codefield;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        playerData = PlayerData.playerData;
-    }
+    public InputField nameField;
+    public InputField levelField;
+    public InputField staminaField;
+    public InputField expField;
+    public InputField moneyField;
+    public InputField codeField;
 
     public void appear(string oldName)
     {
         popup.transform.localPosition = new Vector3(0, 0, 0);
-        namefield.text = "";
-        levelfield.text = "";
-        staminafield.text = "";
-        expfield.text = "";
-        moneyfield.text = "";
-        codefield.text = "";
+        nameField.text = "";
+        levelField.text = "";
+        staminaField.text = "";
+        expField.text = "";
+        moneyField.text = "";
+        codeField.text = "";
         this.oldName = oldName;
     }
 
@@ -57,34 +50,64 @@ public class ChangeUser : MonoBehaviour
         reader = commandRead.ExecuteReader();
         while (reader.Read())
         {
-            if (namefield.text.Length > 0){username = namefield.text;}
-            else{username = oldName;}
-            if (levelfield.text.Length > 0) { level = int.Parse(levelfield.text); }
+            if (nameField.text.Length > 0) { username = nameField.text; }
+            else { username = oldName; }
+            if (levelField.text.Length > 0) { level = int.Parse(levelField.text); }
             else { level = int.Parse(reader[2].ToString()); }
-            if (staminafield.text.Length > 0) { stamina = int.Parse(staminafield.text); }
+            if (staminaField.text.Length > 0) { stamina = int.Parse(staminaField.text); }
             else { stamina = int.Parse(reader[3].ToString()); }
-            if (expfield.text.Length > 0) { exp = int.Parse(expfield.text); }
+            if (expField.text.Length > 0) { exp = int.Parse(expField.text); }
             else { exp = int.Parse(reader[4].ToString()); }
-            if (moneyfield.text.Length > 0) { money = int.Parse(moneyfield.text); }
+            if (moneyField.text.Length > 0) { money = int.Parse(moneyField.text); }
             else { money = int.Parse(reader[5].ToString()); }
-            if (codefield.text.Length > 0) { importCode = int.Parse(codefield.text); }
+            if (codeField.text.Length > 0) { importCode = int.Parse(codeField.text); }
             else { importCode = int.Parse(reader[6].ToString()); }
         }
+        changeUser(dbcon);
     }
 
-    public void changeUser()
+    public void changeUser(IDbConnection dbcon)
     {
-        string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
-        IDbConnection dbcon = new SqliteConnection(connection);
-        dbcon.Open();
-        getValues(dbcon);
         IDbCommand commandRead = dbcon.CreateCommand();
         IDataReader reader;
-        string query = "UPDATE User SET name = '" + username + "', level = '" + level + "', stamina = '" + stamina + "', exp = '" + exp + "', money = '" + money + "', importCode = '" + importCode + "' WHERE name = '" + oldName + "'" ;
+        string query = "UPDATE User SET name = '" + username + "', level = '" + level + "', stamina = '" + stamina + "', exp = '" + exp + "', money = '" + money + "', importCode = '" + importCode + "' WHERE name = '" + oldName + "'";
         commandRead.CommandText = query;
         reader = commandRead.ExecuteReader();
         close();
         dbcon.Close();
+    }
+
+    public void checkValues()
+    {
+        string connection = "URI=file:" + Application.persistentDataPath + "/main";
+        IDbConnection dbcon = new SqliteConnection(connection);
+        dbcon.Open();
+        IDbCommand commandRead = dbcon.CreateCommand();
+        IDataReader reader;
+        string query = "SELECT name FROM User WHERE name = '" + username + "'";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+        bool userExists = false;
+        while (reader.Read())
+        { userExists = true; }
+        if (!userExists)
+        {
+            getValues(dbcon);
+        }
+        else
+        {
+            nameField.GetComponent<Image>().color = new Color(255, 0, 0);
+            nameField.text = "";
+            nameField.placeholder.GetComponent<Text>().text = "Please give in a unique name";
+            nameField.onValueChanged.AddListener(delegate { setNormal("Enter a new name...", nameField); });
+        }
+        dbcon.Close();
+    }
+
+    public void setNormal(string placeholder, InputField field)
+    {
+        field.GetComponent<Image>().color = new Color(255, 255, 255);
+        field.placeholder.GetComponent<Text>().text = placeholder;
+        field.onValueChanged.RemoveAllListeners();
     }
 }

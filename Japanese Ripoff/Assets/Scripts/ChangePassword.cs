@@ -10,6 +10,8 @@ using System.IO;
 public class ChangePassword : MonoBehaviour
 {
     private PlayerData playerData;
+    private bool[] hasValues = new bool[2];
+    public Button change;
     public InputField oldPassword;
     public InputField newPassword;
     public GameObject popup;
@@ -23,18 +25,20 @@ public class ChangePassword : MonoBehaviour
     public void appear()
     {
         popup.transform.localPosition = new Vector3(0, 0, 0);
+        oldPassword.text = "";
+        oldPassword.onValueChanged.AddListener(delegate { requireValue(oldPassword, 0, "password"); });
+        newPassword.text = "";
+        newPassword.onValueChanged.AddListener(delegate { requireValue(newPassword, 1, "password"); });
     }
 
     public void close()
     {
         popup.transform.localPosition = new Vector3(2000, 0, 0);
-        setNormal("");
     }
 
     public void changePassword()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
@@ -47,7 +51,7 @@ public class ChangePassword : MonoBehaviour
         {
             isPasswordRight = oldPassword.text == reader[0].ToString();
         }
-        if (isPasswordRight)
+        if (isPasswordRight && newPassword.text.Length > 0)
         {
             commandRead = dbcon.CreateCommand();
             query = "UPDATE User SET password = '" + newPassword.text +"' WHERE name = '" + playerData.user + "'";
@@ -60,17 +64,42 @@ public class ChangePassword : MonoBehaviour
             oldPassword.GetComponent<Image>().color = new Color(255, 0, 0);
             oldPassword.text = "";
             oldPassword.placeholder.GetComponent<Text>().text = "Please give in the right password";
-            oldPassword.onValueChanged.AddListener(delegate { setNormal(oldPassword.text); });
-
         }
         dbcon.Close();
     }
 
-    public void setNormal(string old)
+    private void requireValue(InputField field, int index, string value)
     {
-        oldPassword.GetComponent<Image>().color = new Color(255, 255, 255);
-        oldPassword.text = old;
-        oldPassword.placeholder.GetComponent<Text>().text = "Enter old password..";
-        oldPassword.onValueChanged.RemoveAllListeners();
+
+        if (field.text.Length > 0)
+        {
+            hasValues[index] = true;
+            field.GetComponent<Image>().color = new Color(255, 255, 255);
+            field.placeholder.GetComponent<Text>().text = "Enter a " + value + "...";
+        }
+        else
+        {
+            hasValues[index] = false;
+            field.GetComponent<Image>().color = new Color(255, 0, 0);
+            field.placeholder.GetComponent<Text>().text = "A " + value + " is required";
+        }
+        hasAllValues();
+    }
+
+    private void hasAllValues()
+    {
+        bool hasFalse = false;
+        foreach (bool hasValue in hasValues)
+        {
+            if (!hasValue)
+            {
+                hasFalse = true;
+            }
+        }
+        if (!hasFalse)
+        {
+            change.interactable = true;
+        }
+        else { change.interactable = false; }
     }
 }

@@ -544,13 +544,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e925c32b6e4ba1f4d800834658e598d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  username: {fileID: 975702064}
-  password: {fileID: 1655057416}
+  nameField: {fileID: 975702064}
+  passwordField: {fileID: 1655057416}
   error: {fileID: 494341248}
-  submitButton: {fileID: 273721223}
+  submitText: {fileID: 273721223}
   title: {fileID: 1767324693}
   Link: {fileID: 770395595}
   ErrorField: {fileID: 714347046}
+  submitButton: {fileID: 1318634068}
 --- !u!4 &746685724
 Transform:
   m_ObjectHideFlags: 0

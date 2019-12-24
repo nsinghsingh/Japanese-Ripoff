@@ -27,7 +27,7 @@ public class PlayerData : MonoBehaviour
         {
             playerData = this;
             DontDestroyOnLoad(gameObject);
-            playerData.user = GameObject.Find("LoginFunctionality").GetComponent<LoginAndRegister>().username.text;
+            playerData.user = GameObject.Find("LoginFunctionality").GetComponent<LoginAndRegister>().nameField.text;
             Destroy(GameObject.Find("LoginFunctionality"));
             makeSQLConnection();
         }
@@ -37,14 +37,23 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    public void refresh()
+    {
+        foreach (GameObject card in cards)
+        {
+            Destroy(card);
+        }
+        makeSQLConnection();
+    }
+
     private void makeSQLConnection()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         getCards(dbcon);
         getUser(dbcon);
+        updateStats(dbcon);
         dbcon.Close();
     }
 
@@ -126,5 +135,52 @@ public class PlayerData : MonoBehaviour
         newInfo.rarity = oldInfo.rarity;
         newInfo.rarityIcon = oldInfo.rarityIcon;
         newInfo.Passives = oldInfo.Passives;
+    }
+
+    private void setUser(IDbConnection dbcon)
+    {
+        IDbCommand commandRead = dbcon.CreateCommand();
+        IDataReader reader;
+        string query = "UPDATE User SET name = '" + user + "', level = '" + level + "', stamina = '" + currentStamina + "', exp = '" + currentExp + "', money = '" + money + "', importCode = '" + importCode + "' WHERE name = '" + user + "'";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+    }
+
+    private void setCards(IDbConnection dbcon)
+    {
+        IDbCommand commandRead = dbcon.CreateCommand();
+        IDataReader reader;
+        string query = "DELETE FROM NumberOfCardsPerUser WHERE fkUser = '" + user + "'";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+        foreach (GameObject card in cards)
+        {
+            commandRead = dbcon.CreateCommand();
+            query = "INSERT INTO NumberOfCardsPerUser (fkUser, fkCardId) VALUES ('" + user + "', '" + card.GetComponent<Card>().id + "')";
+            commandRead.CommandText = query;
+            reader = commandRead.ExecuteReader();
+            Destroy(card);
+        }
+    }
+
+    private void updateStats(IDbConnection dbcon)
+    {
+        string date = DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+        string connection = "URI=file:" + Application.persistentDataPath + "/main";
+        IDbCommand commandRead = dbcon.CreateCommand();
+        IDataReader reader;
+        string query = "DELETE FROM Stat WHERE date = '" + date + "'; INSERT INTO Stat (date, totalUsers) VALUES ('" + date + "', (SELECT COUNT(*) FROM User))";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+    }
+
+    private void OnDestroy()
+    {
+        string connection = "URI=file:" + Application.persistentDataPath + "/main";
+        IDbConnection dbcon = new SqliteConnection(connection);
+        dbcon.Open();
+        setUser(dbcon);
+        setCards(dbcon);
+        dbcon.Close();
     }
 }

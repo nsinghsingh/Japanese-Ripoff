@@ -10,11 +10,24 @@ public class DeleteUser : MonoBehaviour
 {
     public GameObject popup;
     private string username;
+    private PlayerData playerData;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerData = PlayerData.playerData;
+    }
 
     public void appear(string username)
     {
         popup.transform.localPosition = new Vector3(0, 0, 0);
         this.username = username;
+    }
+
+    public void appear()
+    {
+        popup.transform.localPosition = new Vector3(0, 0, 0);
+        this.username = playerData.user;
     }
 
     public void close()
@@ -25,7 +38,6 @@ public class DeleteUser : MonoBehaviour
     public void delete()
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
-        //C:\Users\nihal\AppData\LocalLow\DefaultCompany\Japanese Ripoff
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
         IDbCommand commandRead = dbcon.CreateCommand();
@@ -33,6 +45,11 @@ public class DeleteUser : MonoBehaviour
         string query = "DELETE FROM User WHERE name = '" + username + "'";
         commandRead.CommandText = query;
         reader = commandRead.ExecuteReader();
+        commandRead = dbcon.CreateCommand();
+        query = "DELETE FROM NumberOfCardsPerUser WHERE fkUser = '" + username + "'";
+        commandRead.CommandText = query;
+        reader = commandRead.ExecuteReader();
+        dbcon.Close();
         close();
     }
 }

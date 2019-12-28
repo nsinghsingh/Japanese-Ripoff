@@ -7,7 +7,6 @@ using System;
 using System.IO;
 using UnityEngine.UI;
 using SimpleFileBrowser;
-using UnityEditor;
 
 public class ChangeCard : MonoBehaviour
 {
@@ -62,7 +61,7 @@ public class ChangeCard : MonoBehaviour
             if (!File.Exists(Application.dataPath + "/Resources/Passives/" + file))
             {
                 path = path.Replace("\\", "/");
-                FileUtil.CopyFileOrDirectory(path, Application.dataPath + "/Resources/Passives/" + file);
+                File.Copy(path, Application.dataPath + "/Resources/Passives/" + file);
             }
         },
                                     () => {
@@ -82,7 +81,7 @@ public class ChangeCard : MonoBehaviour
             if (!File.Exists(Application.dataPath + "/Resources/Cards/" + file))
             {
                 path = path.Replace("\\", "/");
-                FileUtil.CopyFileOrDirectory(path, Application.dataPath + "/Resources/Cards/" + file);
+                File.Copy(path, Application.dataPath + "/Resources/Cards/" + file);
             }
         },
                                         () => {

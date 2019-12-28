@@ -7,7 +7,6 @@ using Mono.Data.Sqlite;
 using System;
 using System.IO;
 using SimpleFileBrowser;
-using UnityEditor;
 
 public class AddCard : MonoBehaviour
 {
@@ -47,6 +46,7 @@ public class AddCard : MonoBehaviour
         fields[6].onValueChanged.AddListener(delegate { requireValue(fields[6], 6, values[6]); });
         fields[7].text = "";
         fields[7].onValueChanged.AddListener(delegate { requireValue(fields[7], 7, values[7]); });
+        hasValues = new bool[] { false, false, false, false, false, false, false, false, false, false };
         add.interactable = false;
     }
 
@@ -89,7 +89,7 @@ public class AddCard : MonoBehaviour
             if (!File.Exists(Application.dataPath + "/Resources/Passives/" + file))
             {
                 path = path.Replace("\\", "/");
-                FileUtil.CopyFileOrDirectory(path, Application.dataPath + "/Resources/Passives/" + file);
+                File.Copy(path, Application.dataPath + "/Resources/Passives/" + file);
             }
             hasAllValues();
         },
@@ -112,7 +112,7 @@ public class AddCard : MonoBehaviour
             if (!File.Exists(Application.dataPath + "/Resources/Cards/" + file))
             {
                 path = path.Replace("\\", "/");
-                FileUtil.CopyFileOrDirectory(path, Application.dataPath + "/Resources/Cards/" + file);
+                File.Copy(path, Application.dataPath + "/Resources/Cards/" + file);
             }
             hasAllValues();
         },
@@ -159,12 +159,12 @@ public class AddCard : MonoBehaviour
     {
         IDbCommand commandRead = dbcon.CreateCommand();
         IDataReader reader;
-        string query = "SELECT id FROM Card LIMIT 1 DESC";
+        string query = "SELECT MAX(id) FROM Card";
         commandRead.CommandText = query;
         reader = commandRead.ExecuteReader();
         while (reader.Read())
         {
-            id = int.Parse(reader[0].ToString());
+            id = int.Parse(reader[0].ToString()) + 1;
         }
         cardName = fields[0].text;
         hp = int.Parse(fields[1].text);

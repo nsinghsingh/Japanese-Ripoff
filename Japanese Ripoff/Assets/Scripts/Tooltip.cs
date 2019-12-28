@@ -15,22 +15,28 @@ public class Tooltip : MonoBehaviour
     public void makeBubble()
     {
         Vector2 location = icon.transform.position;
-        location.x += 400;
-        tooltip = new GameObject();
+        location.x += 450;
+        location.y -= 50;
         background = new GameObject();
-        tooltip.transform.parent = background.transform;
-        background.transform.parent = icon.transform;
-        tooltip.transform.position = location;
-        tooltip.AddComponent<Text>();
         background.AddComponent<Image>();
         Image image = background.GetComponent<Image>();
+        image.sprite = Resources.Load<Sprite>("Icons/Bubble");
+        image.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 400);
+        background.transform.SetParent(icon.transform);
+        background.transform.position = location;
+        tooltip = new GameObject();
+        tooltip.transform.parent = background.transform;
+        location.y += 10;
+        tooltip.transform.position = location;
+        tooltip.AddComponent<Text>();
         Text message = tooltip.GetComponent<Text>();
         message.text = help;
         message.fontSize = 32;
         message.font = font;
         message.color = new Color(0, 0, 0);
+        message.alignment = TextAnchor.MiddleCenter;
         message.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 400);
-        
+
     }
 
     public void destroyBubble()

@@ -7,16 +7,21 @@ public class KermitPassive : Passive
     public
     override void attackPassive()
     {
-        Debug.Log("420");
+        Fight fight = fightManager.GetComponent<Fight>();
+        fight.attackBoost += 40;
     }
     public
     override void defensePassive()
     {
-        Debug.Log("420");
+        Fight fight = fightManager.GetComponent<Fight>();
+        fight.defenseBoost += 30;
+        fight.attackBoost += 20;
     }
     public
     override void supportPassive()
     {
-        Debug.Log("420");
+        Fight fight = fightManager.GetComponent<Fight>();
+        fight.attackBoost = (int)(fight.attackBoost * 1.2);
+        fight.defenseBoost += (int)(fight.defenseBoost * 1.2);
     }
 }

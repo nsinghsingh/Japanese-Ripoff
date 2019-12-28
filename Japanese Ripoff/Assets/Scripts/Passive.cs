@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Passive : MonoBehaviour
 {
+    public GameObject fightManager;
+
     public
     virtual void attackPassive()
     {

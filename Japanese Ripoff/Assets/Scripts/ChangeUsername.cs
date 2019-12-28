@@ -48,7 +48,7 @@ public class ChangeUsername : MonoBehaviour
         if (!doesUserExist && newUsername.text.Length > 0)
         {
             commandRead = dbcon.CreateCommand();
-            query = "UPDATE User SET name = '" + newUsername.text + "' WHERE name = '" + playerData.user + "'";
+            query = "UPDATE User SET name = '" + newUsername.text + "' WHERE name = '" + playerData.user + "'; UPDATE NumberOfStagesPerUser SET fkUser = '" + newUsername.text + "' WHERE fkUser = '" + playerData.user + "'; UPDATE NumberOfCardsPerUser SET fkUser = '" + newUsername.text + "' WHERE fkUser = '" + playerData.user + "';";
             commandRead.CommandText = query;
             reader = commandRead.ExecuteReader();
             playerData.user = newUsername.text;

@@ -79,6 +79,7 @@ public class ChangeUser : MonoBehaviour
 
     public void checkValues()
     {
+        username = nameField.text;
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();

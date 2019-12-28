@@ -12,7 +12,7 @@ public class Summon : MonoBehaviour
     public int amount;
     public int price;
     public GameObject grid;
-    public Inventory inventory;
+    public CardScreen summonScreen;
     public GameObject summoning;
     public GameObject header;
     public GameObject footer;
@@ -22,6 +22,7 @@ public class Summon : MonoBehaviour
     private List<GameObject> obtainedCards = new List<GameObject>();
     private int maxCards;
     private string rarity;
+    public GameObject popup;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +39,15 @@ public class Summon : MonoBehaviour
         }
         else
         {
-            // TO DO Show popup
+            popup.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
+
+    public void close()
+    {
+        popup.transform.localPosition = new Vector3(2000, 0, 0);
+    }
+
 
     private GameObject getUnit()
     {
@@ -50,7 +57,7 @@ public class Summon : MonoBehaviour
         string connection = "URI=file:" + Application.persistentDataPath + "/main";
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
-        chooseRarity(random.Next(101), dbcon);
+        chooseRarity(random.Next(100), dbcon);
         getCard(dbcon, random, randomCard);
         dbcon.Close();
         return randomCard;
@@ -124,7 +131,6 @@ public class Summon : MonoBehaviour
 
     private void summon()
     {
-        
         header.SetActive(false);
         footer.SetActive(false);
         amount -= 1;
@@ -151,11 +157,12 @@ public class Summon : MonoBehaviour
                 Image profile = card.GetComponent<Image>();
                 profile.sprite = cardInfo.profile;
                 Button button = card.GetComponent<Button>();
-                button.onClick.AddListener(delegate () { inventory.seeCardInfo(cardInfo); });
+                button.onClick.AddListener(delegate () { summonScreen.seeCardInfo(cardInfo); });
                 card.name = cardInfo.cardName;
                 card.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
                 header.SetActive(true);
                 footer.SetActive(true);
+                card.transform.localScale = new Vector3(1, 1, 1);
             }
         }
     }

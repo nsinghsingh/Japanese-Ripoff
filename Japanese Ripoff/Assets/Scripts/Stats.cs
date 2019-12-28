@@ -14,6 +14,7 @@ public class Stats: MonoBehaviour
     void Start()
     {
         playerData = PlayerData.playerData;
+        InvokeRepeating("recoverStamina", 60.0f, 60.0f);
     }
 
     // Update is called once per frame
@@ -22,14 +23,17 @@ public class Stats: MonoBehaviour
         levelText.text = playerData.level.ToString();
         moneyText.text = playerData.money.ToString();
         getCurrentFill();
-        if (Input.GetKeyDown(KeyCode.Space))
+    }
+
+    private void recoverStamina()
+    {
+        if (playerData.currentStamina < playerData.maxStamina)
         {
-            playerData.level += 1;
-            playerData.currentExp += 1;
             playerData.currentStamina += 1;
         }
     }
-    void getCurrentFill()
+
+    private void getCurrentFill()
     {
         float fillAmount = (float)playerData.currentExp / (float)playerData.maxExp;
         Expmask.fillAmount = fillAmount;
